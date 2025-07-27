@@ -124,16 +124,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const cartItemEl = document.createElement('div');
         cartItemEl.className = 'cart-item';
         cartItemEl.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-            <div class="cart-item-info">
-                <h4 class="cart-item-name">${item.name}</h4>
-                <p class="cart-item-price">$${item.price.toFixed(2)}</p>
-            </div>
-            <div class="cart-item-quantity">
-                <input type="number" value="${item.quantity}" min="1" class="quantity-input" data-id="${item.id}">
-            </div>
-            <p class="cart-item-total">$${itemTotal.toFixed(2)}</p>
-            <button class="cart-item-remove" data-id="${item.id}" aria-label="Remove ${item.name} from cart">×</button>
+    <div class="cart-item-image-container">
+        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+    </div>
+    <div class="cart-item-details">
+        <h4 class="cart-item-name">${item.name}</h4>
+        <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+        <div class="cart-item-controls">
+            <label for="quantity-${item.id}" class="sr-only">Quantity</label>
+            <input type="number" id="quantity-${item.id}" value="${item.quantity}" min="1" class="quantity-input" data-id="${item.id}">
+            <button class="cart-item-remove" data-id="${item.id}" aria-label="Remove ${item.name} from cart">Remove</button>
+        </div>
+    </div>
+    <div class="cart-item-total-container">
+        <p class="cart-item-total">$${itemTotal.toFixed(2)}</p>
+    </div>
         `;
         cartItemsContainer.appendChild(cartItemEl);
     });
@@ -239,5 +244,25 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
     });
+
+    const featuredProductsSection = document.querySelector('.featured-products');
+if (featuredProductsSection) {
+    const scrollContainer = featuredProductsSection.querySelector('.product-scroll-container');
+    const leftBtn = featuredProductsSection.querySelector('.scroll-btn-left');
+    const rightBtn = featuredProductsSection.querySelector('.scroll-btn-right');
+
+    if (scrollContainer && leftBtn && rightBtn) {
+        // A fixed amount to scroll. Adjust as needed.
+        const scrollAmount = 320; 
+
+        rightBtn.addEventListener('click', () => {
+            scrollContainer.scrollLeft += scrollAmount;
+        });
+
+        leftBtn.addEventListener('click', () => {
+            scrollContainer.scrollLeft -= scrollAmount;
+        });
+    }
+}
 
 });

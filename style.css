@@ -262,22 +262,22 @@ img {
 }
 
 /* --- Cart Page --- */
-.page-title {
-    text-align: center;
-    font-size: 2.8rem;
-    margin: 2rem 0 3rem;
+.cart-page {
+    padding-bottom: 3rem;
 }
 
 .cart-layout {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 2.5fr 1fr; /* Give more space to items */
+    gap: 2.5rem;
     align-items: flex-start;
 }
 
+/* --- Cart Items Styling (Desktop) --- */
 .cart-header {
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr; /* Image | Details | Total */
+    padding: 0 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid #eee;
     font-weight: bold;
@@ -286,35 +286,53 @@ img {
     letter-spacing: 1px;
     font-size: 0.9rem;
 }
-
-.header-product { grid-column: 1 / 3; }
-.header-quantity { text-align: center; }
+.header-product { grid-column: 1 / 3; } /* Span first two columns */
 .header-total { text-align: right; }
 
+.cart-items-container {
+    background-color: var(--color-white);
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-radius: 8px;
+}
+
 .cart-item {
-    display: flex;
+    display: grid; /* Use grid for perfect column alignment */
+    grid-template-columns: 100px 1fr 100px; /* Image | Details | Total */
     align-items: center;
+    gap: 1.5rem;
     padding: 1.5rem 0;
     border-bottom: 1px solid #eee;
 }
+.cart-item:last-child {
+    border-bottom: none;
+}
 
+.cart-item-image-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
 .cart-item-image {
-    width: 100px;
-    height: 120px;
-    object-fit: cover;
-    margin-right: 1.5rem;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
-.cart-item-info {
-    flex-grow: 1;
+.cart-item-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+.cart-item-price {
+    color: #888;
+    margin-bottom: 1rem;
 }
 
-.cart-item-name { font-size: 1.1rem; }
-.cart-item-price { color: #888; }
-
-.cart-item-quantity {
-    width: 70px;
-    margin: 0 1rem;
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 .quantity-input {
     width: 60px;
@@ -324,30 +342,49 @@ img {
     border-radius: 4px;
 }
 
-.cart-item-total {
-    font-weight: bold;
-    width: 100px;
-    text-align: right;
-}
-
 .cart-item-remove {
     background: none;
     border: none;
-    font-size: 1.5rem;
-    color: #aaa;
+    color: #999;
     cursor: pointer;
-    margin-left: 1rem;
+    font-size: 0.9rem;
+    text-decoration: underline;
     transition: color 0.3s ease;
 }
 .cart-item-remove:hover { color: var(--color-primary); }
 
+.cart-item-total {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.cart-item-total-container { text-align: right; }
+
+
+/* --- Summary Box Styling (Unchanged, but included for completeness) --- */
 .cart-summary {
     background-color: var(--color-white);
     padding: 2rem;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    position: sticky; /* Sticks while scrolling */
-    top: 100px; /* Offset from header */
+    position: sticky;
+    top: 100px;
+    border-radius: 8px;
 }
+.summary-title { font-size: 1.5rem; margin-bottom: 1.5rem; }
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.summary-row.total-row {
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+.checkout-btn { width: 100%; margin-top: 1rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+
 
 .summary-title { font-size: 1.5rem; margin-bottom: 1.5rem; }
 
@@ -737,6 +774,40 @@ img {
     border: none;
 }
 
+.scroll-wrapper {
+    position: relative;
+}
+
+/* 2. The Fading Edge Effect */
+.product-scroll-container {
+    /* This creates the transparent-to-black-to-transparent gradient mask */
+    mask-image: linear-gradient(to right, transparent, black 20px, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black 95%, transparent);
+}
+
+/* 3. Scroll Button Styling */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #eee;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    
+    /* Hide buttons by default on mobile */
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
 /* --- For Laptops & Large Tablets (<= 1200px) --- */
 @media (max-width: 1200px) {
     .container {
@@ -866,38 +937,52 @@ img {
     .product-detail-info .product-name {
         font-size: 2rem;
     }
+    .scroll-btn {
+        display: flex;
+    }
+}
+
+.scroll-btn:hover {
+    background-color: var(--color-white);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.scroll-btn-left {
+    left: 10px;
+}
+
+.scroll-btn-right {
+    right: 10px;
+}
 
     /* --- Cart Page Mobile --- */
+    .cart-layout {
+        grid-template-columns: 1fr; /* Stack on mobile */
+    }
+    .cart-items-container {
+        padding: 0.5rem;
+    }
     .cart-header {
-        display: none; /* Hide header row, info will be in each item */
+        display: none; /* Hide header on mobile */
     }
     .cart-item {
-        /* Create a block layout for better readability */
-        flex-direction: column;
+        /* Use flexbox for a side-by-side mobile layout */
+        display: flex;
+        grid-template-columns: none; /* Disable grid */
         align-items: flex-start;
-        position: relative;
+        gap: 1rem;
     }
-    .cart-item-image {
-        width: 100%;
-        height: auto;
-        max-height: 300px;
-        object-fit: contain;
-        margin-bottom: 1rem;
+    .cart-item-image-container {
+        flex-shrink: 0; /* Prevent image from shrinking */
+        width: 90px;
     }
-    .cart-item-info {
-        margin-bottom: 1rem;
+    .cart-item-details {
+        flex-grow: 1; /* Allow details to take remaining space */
     }
-    .cart-item-quantity {
-        margin: 0 0 1rem 0;
+    .cart-item-total-container {
+        /* Hide the total per item on mobile to save space */
+        display: none;
     }
-    .cart-item-remove {
-        /* Position remove button in the top-right corner */
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        font-size: 1.8rem;
-    }
-
     .about-container {
         padding: 2rem 1rem;
     }
@@ -905,7 +990,7 @@ img {
     .contact-layout {
         padding: 1.5rem;
     }
-}
+
 
 /* --- Filter Controls --- */
 .filter-controls {
