@@ -743,6 +743,9 @@ img {
         /* Reduce max-width to give more breathing room */
         max-width: 960px;
     }
+    .hero {
+    height: 100vh;
+    }
 }
 
 
@@ -752,6 +755,9 @@ img {
         max-width: 720px;
     }
 
+    .hero {
+    height: 100vh;
+    }
     /* --- Layout Adjustments --- */
     .product-detail-layout {
         /* Stack image and info vertically */
@@ -791,6 +797,9 @@ img {
 
 /* --- For Mobile Phones (<= 768px) --- */
 @media (max-width: 768px) {
+    .hero {
+    height: 100vh;
+    }
     .container {
         /* Use more of the screen width */
         padding: 0 20px;
@@ -849,9 +858,7 @@ img {
     }
 
     /* --- Element & Layout Adjustments --- */
-    .hero {
-        height: 60vh; /* Reduce hero height */
-    }
+
     .product-grid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 1rem;
@@ -1015,4 +1022,38 @@ img {
     color: var(--color-accent);
     text-decoration: underline;
     font-weight: bold;
+}
+
+.featured-products {
+    /* The container for the whole section */
+    position: relative;
+}
+
+.product-scroll-container {
+    display: flex; /* Key property to enable flexbox layout */
+    overflow-x: auto; /* Allow horizontal scrolling */
+    scroll-behavior: smooth; /* Nice smooth scroll on click/drag */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
+    padding: 1rem 0 2rem 0; /* Add padding for aesthetics and scrollbar space */
+    
+    /* Hides the default scrollbar */
+    scrollbar-width: none; /* For Firefox */
+}
+.product-scroll-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.featured-products .product-grid {
+    /* The grid itself now acts as the flex container for the cards */
+    display: flex;
+    flex-wrap: nowrap; /* Prevent cards from wrapping to the next line */
+    gap: 1.5rem; /* The space between cards */
+    padding-left: 2rem; /* Give starting space */
+    padding-right: 2rem; /* Give ending space */
+}
+
+.featured-products .product-card {
+    /* Critical for horizontal scrolling items */
+    flex: 0 0 300px; /* Do not grow, do not shrink, and have a base width of 300px */
+    width: 300px;
 }
