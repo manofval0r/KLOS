@@ -179,44 +179,123 @@ img {
 /* --- Product Grid --- */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 2rem 0;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
 }
 
+/* --- Shop Page & Product Card Redesign --- */
+
+.shop-page .page-title {
+    margin-bottom: 1rem; /* Reduce space under title */
+}
+
+/* Make filter controls feel more integrated */
+.filter-controls {
+    margin-bottom: 3rem;
+    border: none;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.no-products-message {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 3rem;
+}
+
+/* The New Product Card */
 .product-card {
     background-color: var(--color-white);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+    text-align: left; /* Change to left-align for a cleaner look */
+    transition: all 0.4s ease;
+    display: flex; /* Helps with footer alignment if needed */
+    flex-direction: column;
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+.product-image-container {
+    position: relative; /* Crucial for the overlay */
+    overflow: hidden; /* Hides parts of the overlay that stick out */
+    background-color: #f9f9f9; /* Fallback color if image fails to load */
 }
 
-.product-image img {
+.product-image {
     width: 100%;
-    height: 350px;
+    height: 420px;
     object-fit: cover;
+    transition: transform 0.4s ease;
 }
 
+.product-card:hover .product-image {
+    transform: scale(1.05); /* Gentle zoom on hover */
+}
+
+/* The Hover Overlay */
+.product-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    /* Start hidden and transition in */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-out;
+}
+
+.product-card:hover .product-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* A secondary button style for "View Details" */
+.btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+.btn-secondary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* Product Info Below Image */
 .product-info {
-    padding: 1.5rem;
+    padding: 1.25rem;
+    border-top: 1px solid #eee;
+    flex-grow: 1; /* Pushes content down if cards are uneven heights */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-name {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.product-name a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+.product-name a:hover {
+    color: var(--color-accent);
 }
 
 .product-price {
     font-size: 1.1rem;
-    color: var(--color-accent);
     font-weight: bold;
-    margin-bottom: 1rem;
+    color: var(--color-primary);
 }
 
 /* --- Product Detail Page --- */
@@ -808,6 +887,154 @@ img {
     align-items: center;
 }
 
+.view-toggle {
+    display: none; /* Hide on desktop by default */
+    margin-left: auto; /* Push it to the right */
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.view-btn {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    color: #aaa;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Style for the currently active button */
+.view-btn.active {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* --- Product Detail Page Redesign --- */
+
+.breadcrumb {
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #888;
+}
+.breadcrumb a {
+    color: #555;
+    text-decoration: none;
+}
+.breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+/* --- Image Gallery --- */
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.main-image-container {
+    border: 1px solid #eee;
+    background-color: var(--color-white);
+    padding: 1rem;
+    border-radius: 8px;
+}
+.thumbnail-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+.thumbnail-image {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+.thumbnail-image:hover, .thumbnail-image.active {
+    opacity: 1;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 8px rgba(197, 164, 126, 0.4);
+}
+
+/* --- Product Actions (Quantity + Button) --- */
+.product-actions {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    align-items: center;
+}
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.quantity-selector input {
+    width: 60px;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.product-actions .add-to-cart-btn {
+    flex-grow: 1; /* Make button take up remaining space */
+}
+
+/* --- Product Accordion --- */
+.product-accordion {
+    border-top: 1px solid #eee;
+    margin-top: 2rem;
+}
+.accordion-item {
+    border-bottom: 1px solid #eee;
+}
+.accordion-header {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 1.25rem 0;
+    font-family: var(--font-body);
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.accordion-header::after {
+    content: '+'; /* Plus icon */
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    transition: transform 0.3s ease;
+}
+.accordion-header.active::after {
+    transform: rotate(45deg); /* Turns plus into a cross */
+}
+.accordion-panel {
+    max-height: 0; /* Start collapsed */
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    padding: 0 1rem;
+}
+.accordion-panel p {
+    padding-bottom: 1.5rem;
+}
+
+/* --- Related Products Section --- */
+.related-products {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid #eee;
+}
+
 /* --- For Laptops & Large Tablets (<= 1200px) --- */
 @media (max-width: 1200px) {
     .container {
@@ -863,6 +1090,16 @@ img {
         text-align: center;
         gap: 1.5rem;
     }
+
+    .collection-layout {
+        /* Stack the hero and grid on top of each other */
+        grid-template-columns: 1fr;
+    }
+    .product-grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
 }
 
 
@@ -931,14 +1168,28 @@ img {
     /* --- Element & Layout Adjustments --- */
 
     .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2rem;
     }
     .product-detail-info .product-name {
         font-size: 2rem;
     }
+    .view-toggle {
+        display: flex;
+    }
+    .product-grid.two-column-view {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .product-grid.two-column-view .product-image {
+        height: 220px;
+    }
     .scroll-btn {
         display: flex;
+    }
+    .featured-products .product-card {
+        flex-basis: 40%;
+        width: 40%;
     }
 }
 
@@ -1109,36 +1360,78 @@ img {
     font-weight: bold;
 }
 
-.featured-products {
-    /* The container for the whole section */
+/* --- Homepage: Curated Collection Section --- */
+.curated-collection {
+    padding: 4rem 1rem;
+}
+
+.collection-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Asymmetrical columns */
+    gap: 1.5rem;
+    min-height: 600px; /* Give the section a good height */
+}
+
+.collection-hero {
     position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.product-scroll-container {
-    display: flex; /* Key property to enable flexbox layout */
-    overflow-x: auto; /* Allow horizontal scrolling */
-    scroll-behavior: smooth; /* Nice smooth scroll on click/drag */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
-    padding: 1rem 0 2rem 0; /* Add padding for aesthetics and scrollbar space */
-    
-    /* Hides the default scrollbar */
-    scrollbar-width: none; /* For Firefox */
+.collection-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.product-scroll-container::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
+.collection-hero:hover img {
+    transform: scale(1.05);
 }
 
-.featured-products .product-grid {
-    /* The grid itself now acts as the flex container for the cards */
+.collection-hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2.5rem;
+    color: var(--color-white);
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+
+.collection-hero-content h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.collection-hero-content p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr); /* Two equal rows */
+    gap: 1.5rem;
+}
+
+/* We reuse the product-card style, but ensure it fits the new grid */
+.collection-grid .product-card {
+    height: 100%;
     display: flex;
-    flex-wrap: nowrap; /* Prevent cards from wrapping to the next line */
-    gap: 1.5rem; /* The space between cards */
-    padding-left: 2rem; /* Give starting space */
-    padding-right: 2rem; /* Give ending space */
+    flex-direction: column;
+}
+.collection-grid .product-image {
+    flex-grow: 1; /* Make image fill available space */
+}
+.collection-grid .product-image img {
+    height: 100%;
+}
+.collection-grid .product-info {
+    padding: 1rem;
 }
 
-.featured-products .product-card {
-    /* Critical for horizontal scrolling items */
-    flex: 0 0 300px; /* Do not grow, do not shrink, and have a base width of 300px */
-    width: 300px;
+.collection-cta {
+    text-align: center;
+    margin-top: 2.5rem;
 }
