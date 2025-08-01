@@ -1171,6 +1171,21 @@ img {
         grid-template-columns: repeat(1, 1fr);
         gap: 2rem;
     }
+    .curated-collection {
+        padding: 2rem 0; /* Reduce vertical padding on mobile */
+    }
+    .curated-collection .product-image{
+        height: 220px;
+    }
+    .curated-collection .collection-hero .product-image {
+        height: 280px;
+    }
+    .collection-hero-content{
+        padding: 1.5rem;
+    }
+    .collection-hero-content h3{
+        font-size: 1.5rem;
+    }
     .product-detail-info .product-name {
         font-size: 2rem;
     }
