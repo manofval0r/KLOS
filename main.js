@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <section class="related-products">
                 <h2 class="section-title">You Might Also Like</h2>
-                <div class="product-grid">
+                <div class="product-grid-like">
                     <!-- Related products will be rendered here by JS -->
                 </div>
             </section>
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render related products (excluding the current one)
         const related = products.filter(p => p.id !== product.id).slice(0, 3);
-        renderProducts('.related-products .product-grid', related);
+        renderProducts('.related-products .product-grid-like', related);
 
     } else {
         productDetailContainer.innerHTML = '<h2>Product not found.</h2>';

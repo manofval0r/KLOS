@@ -183,6 +183,11 @@ img {
     gap: 2.5rem;
 }
 
+.product-grid-like {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+}
 /* --- Shop Page & Product Card Redesign --- */
 
 .shop-page .page-title {
@@ -1099,7 +1104,10 @@ img {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
     }
-
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
 }
 
 
@@ -1170,6 +1178,10 @@ img {
     .product-grid {
         grid-template-columns: repeat(1, 1fr);
         gap: 2rem;
+    }
+    .product-grid-like {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
     }
     .curated-collection {
         padding: 2rem 0; /* Reduce vertical padding on mobile */
